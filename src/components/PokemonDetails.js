@@ -1,7 +1,8 @@
 import React from 'react';
 
 const PokemonDetails = (props) => {
-    return <React.Fragment>
+    return <div onClick={() => props.onPokemonClick(props.pokemon)}
+    >
         <div className="col-4">
             <img src={props.pokemon.sprite}
                  alt={props.pokemon.name}
@@ -24,7 +25,7 @@ const PokemonDetails = (props) => {
                 </tr>
             </tbody>
         </table>
-    </React.Fragment>
+    </div>
 }
 
 export default PokemonDetails;

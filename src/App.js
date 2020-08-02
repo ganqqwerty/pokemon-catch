@@ -1,10 +1,10 @@
 import useInterval from '@use-it/interval';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import PokemonDetails from './components/PokemonDetails';
 import React, {useState} from 'react';
 import './App.css';
 import yuri from './assets/yuri-pokemon.png'
+import PokemonDetails from './components/PokemonDetails';
 import PokemonShort from './components/PokemonShort';
 
 function sortById(left, right) {
@@ -52,17 +52,18 @@ const App = () => {
             <div className="row">
                 <section className="col-6 d-flex flex-wrap bd-highlight justify-content-around wild-pane">
                     {wildPokemons.map((pokemon) => <div key={pokemon.id}
-                                                        className="w-30"
-                                                        onClick={() => catchPokemon(pokemon)}>
-                            <PokemonShort pokemon={pokemon}/>
+                                                        className="w-30">
+                            <PokemonShort pokemon={pokemon}
+                                          onPokemonClick={catchPokemon} />
                         </div>
                     )}
                 </section>
                 <section className="col-6 caught-pane">
                     {caughtPokemons.map((pokemon) => <div key={pokemon.id}
                                                           className="row"
-                                                          onClick={() => releasePokemon(pokemon)}>
-                            <PokemonDetails pokemon={pokemon}/>
+                        >
+                            <PokemonDetails pokemon={pokemon}
+                                            onPokemonClick={releasePokemon} />
                         </div>
                     )}
                 </section>
