@@ -9,28 +9,31 @@ function sortById(left, right) {
     return left.id - right.id;
 }
 
-const MAX_CATCHING_CAPACITY = 7;
+const MAX_CATCHING_CAPACITY = 6;
 const UPDATE_INTERVAL = 1000;
+const MAX_POKEMONS = 3;
 
 const App = props => {
     const [pokemonNumber, changePokemonNumber] = useState(1);
     const [wildPokemons, changeWildPokemons] = useState([]);
     const [caughtPokemons, changeCaughtPokemons] = useState([]);
     useInterval(() => {
-        axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`)
-            .then(res => {
-                changePokemonNumber(old => old + 1);
-                changeWildPokemons(old => [...old, {
-                    id: res.data.id,
-                    name: res.data.name,
-                    sprite: res.data.sprites.front_default,
-                    type: res.data.types[0].type.name
-                }]);
-            })
-            .catch((reason) => {
-                console.error(reason);
-            });
-    }, UPDATE_INTERVAL);
+        {
+            axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`)
+                .then(res => {
+                    changePokemonNumber(old => old + 1);
+                    changeWildPokemons(old => [...old, {
+                        id: res.data.id,
+                        name: res.data.name,
+                        sprite: res.data.sprites.front_default,
+                        type: res.data.types[0].type.name
+                    }]);
+                })
+                .catch((reason) => {
+                    console.error(reason);
+                });
+        }
+    }, wildPokemons.length + caughtPokemons.length > MAX_POKEMONS ? null : UPDATE_INTERVAL);
 
     const catchPokemon = (caughtPokemon) => {
         if (caughtPokemons.length < MAX_CATCHING_CAPACITY) {
