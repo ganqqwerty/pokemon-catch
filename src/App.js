@@ -1,9 +1,11 @@
 import useInterval from '@use-it/interval';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import PokemonDetails from './components/PokemonDetails';
 import React, {useState} from 'react';
 import './App.css';
 import yuri from './assets/yuri-pokemon.png'
+import PokemonShort from './components/PokemonShort';
 
 function sortById(left, right) {
     return left.id - right.id;
@@ -18,21 +20,19 @@ const App = () => {
     const [wildPokemons, changeWildPokemons] = useState([]);
     const [caughtPokemons, changeCaughtPokemons] = useState([]);
     useInterval(() => {
-        {
-            axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`)
-                .then(res => {
-                    changePokemonNumber(old => old + 1);
-                    changeWildPokemons(old => [...old, {
-                        id: res.data.id,
-                        name: res.data.name,
-                        sprite: res.data.sprites.front_default,
-                        type: res.data.types[0].type.name
-                    }]);
-                })
-                .catch((reason) => {
-                    console.error(reason);
-                });
-        }
+        axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`)
+            .then(res => {
+                changePokemonNumber(old => old + 1);
+                changeWildPokemons(old => [...old, {
+                    id: res.data.id,
+                    name: res.data.name,
+                    sprite: res.data.sprites.front_default,
+                    type: res.data.types[0].type.name
+                }]);
+            })
+            .catch((reason) => {
+                console.error(reason);
+            });
     }, wildPokemons.length + caughtPokemons.length > MAX_POKEMONS ? null : UPDATE_INTERVAL);
 
     const catchPokemon = (caughtPokemon) => {
@@ -54,12 +54,7 @@ const App = () => {
                     {wildPokemons.map((pokemon) => <div key={pokemon.id}
                                                         className="w-30"
                                                         onClick={() => catchPokemon(pokemon)}>
-                            <img key={pokemon.id + '_img'}
-                                 className=""
-                                 src={pokemon.sprite}
-                                 alt={pokemon.name}
-
-                            />
+                            <PokemonShort pokemon={pokemon}/>
                         </div>
                     )}
                 </section>
@@ -67,28 +62,7 @@ const App = () => {
                     {caughtPokemons.map((pokemon) => <div key={pokemon.id}
                                                           className="row"
                                                           onClick={() => releasePokemon(pokemon)}>
-                            <div className="col-4">
-                                <img src={pokemon.sprite}
-                                     alt={pokemon.name}
-                                />
-                            </div>
-                            <table className="col-8 d-flex align-self-center"
-                            >
-                                <tbody>
-                                    <tr>
-                                        <th>ID:</th>
-                                        <td className="pl-1">{pokemon.id}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>name:</th>
-                                        <td className="pl-1">{pokemon.name}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>type:</th>
-                                        <td className="pl-1">{pokemon.type}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <PokemonDetails pokemon={pokemon}/>
                         </div>
                     )}
                 </section>
