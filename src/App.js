@@ -62,8 +62,10 @@ const App = () => {
                     {caughtPokemons.map((pokemon) => <div key={pokemon.id}
                                                           className="row"
                         >
-                            <PokemonDetails pokemon={pokemon}
-                                            onPokemonClick={releasePokemon} />
+                            <div className="col-12">
+                                <PokemonDetails pokemon={pokemon}
+                                                onPokemonClick={releasePokemon} />
+                            </div>
                         </div>
                     )}
                 </section>
