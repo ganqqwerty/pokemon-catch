@@ -28,3 +28,14 @@
     flex-direction: row;
   }
 }
+.w-30 {
+  width: 33.33%;
+}
+.caught-pane {
+  background-color: #68e0a0;
+}
+
+.wild-pane {
+  background-color: #c687fc;
+
+}
