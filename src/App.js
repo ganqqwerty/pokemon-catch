@@ -11,9 +11,9 @@ function sortById(left, right) {
 
 const MAX_CATCHING_CAPACITY = 6;
 const UPDATE_INTERVAL = 1000;
-const MAX_POKEMONS = 3;
+const MAX_POKEMONS = 151;
 
-const App = props => {
+const App = () => {
     const [pokemonNumber, changePokemonNumber] = useState(1);
     const [wildPokemons, changeWildPokemons] = useState([]);
     const [caughtPokemons, changeCaughtPokemons] = useState([]);
@@ -53,7 +53,7 @@ const App = props => {
                 <section className="col-6 d-flex flex-wrap bd-highlight justify-content-around wild-pane">
                     {wildPokemons.map((pokemon) => <div key={pokemon.id}
                                                         className="w-30"
-                                                        onClick={event => catchPokemon(pokemon)}>
+                                                        onClick={() => catchPokemon(pokemon)}>
                             <img key={pokemon.id + '_img'}
                                  className=""
                                  src={pokemon.sprite}
@@ -66,7 +66,7 @@ const App = props => {
                 <section className="col-6 caught-pane">
                     {caughtPokemons.map((pokemon) => <div key={pokemon.id}
                                                           className="row"
-                                                          onClick={event => releasePokemon(pokemon)}>
+                                                          onClick={() => releasePokemon(pokemon)}>
                             <div className="col-4">
                                 <img src={pokemon.sprite}
                                      alt={pokemon.name}
