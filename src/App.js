@@ -48,8 +48,8 @@ const App = () => {
 
     return <React.Fragment>
         <h1 className="text-center">Pokémon app</h1>
-        <main className="container fill">
-            <div className="row panes">
+        <main className="container">
+            <div className="row">
                 <section className="col-6 d-flex flex-wrap bd-highlight justify-content-around wild-pane">
                     {wildPokemons.map((pokemon) => <div key={pokemon.id}
                                                         className="w-30"
