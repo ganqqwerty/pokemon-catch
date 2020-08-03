@@ -6,10 +6,6 @@ import yuri from "./assets/yuri-pokemon.png";
 import PokemonDetails from "./components/PokemonDetails";
 import PokemonShort from "./components/PokemonShort";
 
-function sortById(left, right) {
-    return left.id - right.id;
-}
-
 const MAX_CATCHING_CAPACITY = 6;
 const UPDATE_INTERVAL = 500;
 const MAX_POKEMONS = 151;
@@ -57,7 +53,6 @@ const App = () => {
                 .map((item) =>
                     item.id === pokemon.id ? { ...item, isCaught: !item.isCaught } : item
                 )
-                .sort(sortById)
         );
     };
     const catchPokemon = (caughtPokemon) => {
