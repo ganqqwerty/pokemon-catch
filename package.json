@@ -1,7 +1,7 @@
 {
   "name": "pokemon-catch",
   "version": "0.1.0",
-  "homepage": "http://ganqqwerty.github.io/pokemon-catc",
+  "homepage": "http://ganqqwerty.github.io/pokemon-catch",
   "private": true,
   "dependencies": {
     "@use-it/interval": "^0.1.3",

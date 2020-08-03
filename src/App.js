@@ -12,7 +12,7 @@ function sortById(left, right) {
 }
 
 const MAX_CATCHING_CAPACITY = 6;
-const UPDATE_INTERVAL = 50;
+const UPDATE_INTERVAL = 2000;
 const MAX_POKEMONS = 150;
 
 const App = () => {

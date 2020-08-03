@@ -1,27 +1,28 @@
 import React from 'react';
 
 const PokemonDetails = (props) => {
-    return <div onClick={() => props.onPokemonClick(props.pokemon)}
+    return <div className="row"
+                onClick={() => props.onPokemonClick(props.pokemon)}
     >
         <div className="col-4">
             <img src={props.pokemon.sprite}
                  alt={props.pokemon.name}
             />
         </div>
-        <table className="col-8 d-flex align-self-center"
+        <table className="table table-borderless col-8"
         >
             <tbody>
                 <tr>
-                    <th>ID:</th>
-                    <td className="pl-1">{props.pokemon.id}</td>
+                    <th scope="row" className="w-50">ID:</th>
+                    <td >{props.pokemon.id}</td>
                 </tr>
                 <tr>
-                    <th>name:</th>
-                    <td className="pl-1">{props.pokemon.name}</td>
+                    <th scope="row" className="w-50">name:</th>
+                    <td>{props.pokemon.name}</td>
                 </tr>
                 <tr>
-                    <th>type:</th>
-                    <td className="pl-1">{props.pokemon.type}</td>
+                    <th scope="row" className="w-50">type:</th>
+                    <td>{props.pokemon.type}</td>
                 </tr>
             </tbody>
         </table>
