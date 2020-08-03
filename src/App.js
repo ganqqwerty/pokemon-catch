@@ -12,38 +12,46 @@ function sortById(left, right) {
 }
 
 const MAX_CATCHING_CAPACITY = 6;
-const UPDATE_INTERVAL = 500;
-const MAX_POKEMONS = 151;
+const UPDATE_INTERVAL = 50;
+const MAX_POKEMONS = 150;
 
 const App = () => {
-    const [pokemonNumber, changePokemonNumber] = useState(1);
-    const [wildPokemons, changeWildPokemons] = useState([]);
-    const [caughtPokemons, changeCaughtPokemons] = useState([]);
+    const [pokemonNumber, setPokemonNumber] = useState(1);
+    const [wildPokemons, setWildPokemons] = useState([]);
+    const [caughtPokemons, setCaughtPokemons] = useState([]);
+    const [isFetchRunning, setIsFetchRunning] = useState(false);
+
+    const shouldPauseRequests = () => {
+        const isTooManyPokemons = wildPokemons.length + caughtPokemons.length > MAX_POKEMONS;
+        return isTooManyPokemons || isFetchRunning;
+    }
     useInterval(() => {
+        setIsFetchRunning(true)
         axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`)
             .then(res => {
-                changePokemonNumber(old => old + 1);
-                changeWildPokemons(old => [...old, {
+                setPokemonNumber(old => old + 1);
+                setWildPokemons(old => [...old, {
                     id: res.data.id,
                     name: res.data.name,
                     sprite: res.data.sprites.front_default,
                     type: res.data.types[0].type.name
                 }]);
+                setIsFetchRunning(false);
             })
             .catch((reason) => {
                 console.error(reason);
             });
-    }, wildPokemons.length + caughtPokemons.length > MAX_POKEMONS ? null : UPDATE_INTERVAL);
+    }, shouldPauseRequests() ? null : UPDATE_INTERVAL);
 
     const catchPokemon = (caughtPokemon) => {
         if (caughtPokemons.length < MAX_CATCHING_CAPACITY) {
-            changeWildPokemons(res => res.filter(pokemon => pokemon.id !== caughtPokemon.id));
-            changeCaughtPokemons(old => [...old, caughtPokemon].sort(sortById));
+            setWildPokemons(res => res.filter(pokemon => pokemon.id !== caughtPokemon.id));
+            setCaughtPokemons(old => [...old, caughtPokemon].sort(sortById));
         }
     }
     const releasePokemon = (releasedPokemon) => {
-        changeCaughtPokemons(res => res.filter(pokemon => pokemon.id !== releasedPokemon.id));
-        changeWildPokemons(old => [...old, releasedPokemon].sort(sortById));
+        setCaughtPokemons(res => res.filter(pokemon => pokemon.id !== releasedPokemon.id));
+        setWildPokemons(old => [...old, releasedPokemon].sort(sortById));
     }
 
     return <React.Fragment>
